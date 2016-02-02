@@ -1,17 +1,18 @@
 <% counter = 0 %>
-<% @client.search(":chavezcandanga", result_type: "recent").take(100).collect do |tweet| %>
+<% @client.search("chavez", result_type: "recent").take(10).collect do |tweet| %>
   <% counter += 1 %>
   <h2><%= counter %></h2>
   <h3>Usuario</h3>
   <p><%= tweet.user.screen_name %></p>
     <h3>Nombre de Usuario</h3>
     <p><%= tweet.user.name %> </p>
-      <h3>Biografia</h3>
+    <h3>Tweet:</h3>
+    <p><%= tweet.full_text %></p>
+      <h3>Biografia del usuario</h3>
      <p><%= tweet.user.description %></p>
     <h3>ID de Usuario:</h3>
     <p><%= tweet.user.id %></p>
-    <h3>Tweet:</h3>
-    <p><%= tweet.full_text %></p>
-  <h3>Hora de tweets</h3>
+
+  <h3>Hora del tweet</h3>
    <p><%= tweet.created_at %></p>
 <%  end %>
