@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  keyword: MyString
+  result_type: MyString
+  limit: 1
+
+two:
+  keyword: MyString
+  result_type: MyString
+  limit: 1
