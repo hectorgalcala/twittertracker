@@ -39,14 +39,11 @@ class TweetsController < ApplicationController
   # POST /tweets.json
   def create
     @tweet = Tweet.new(tweet_params)
-
-    respond_to do |format|
       if @tweet.save
         redirect_to @tweet, notice: 'Tweet was successfully created.'
       else
         render :new
       end
-    end
   end
 
   # PATCH/PUT /tweets/1
