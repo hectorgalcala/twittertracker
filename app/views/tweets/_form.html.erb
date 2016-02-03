@@ -18,7 +18,7 @@
   <div class="field">
     <%= f.label :result_type %><br>
     <%#= f.text_field :result_type %>
-    <%= select_tag(:result_type, options_for_select([['recent', 'recent'], ['mixed', 'mixed'], ['popular', 'popular']], :include_blank => true)) %>
+    <%= f.select(:result_type, options_for_select([['recent', 'recent'], ['mixed', 'mixed'], ['popular', 'popular']])) %>
 
   </div>
   <div class="field">

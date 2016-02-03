@@ -1,5 +1,19 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+  before_action :set_twitter, only: [:index, :show]
+
+  api_key = {
+  consumer_key: "TZnjmcMkWVwGmFESPNpLpYvhm",
+  consumer_secret: "m7EJpSI9mDN6PIfxmc3WC4MRW4idNMojQ0SZkjlPjBg0gRxMHZ",
+  access_token: "38503207-vNSvaBgpbVK4elAmB7UGGqvzyzZuRUunWdo272wEG",
+  access_token_secret:"84bgcso2APKq2eyd49QIThrF6fFw34FBvbrEufRkxnk93"
+  }
+  TWITTER_CONSUMER_KEY = api_key[:consumer_key]
+  TWITTER_CONSUMER_SECRET = api_key[:consumer_secret]
+  TWITTER_ACCESS_TOKEN = api_key[:access_token]
+  TWITTER_ACCESS_SECRET = api_key[:access_token_secret]
+
+
 
   # GET /tweets
   # GET /tweets.json
@@ -28,11 +42,9 @@ class TweetsController < ApplicationController
 
     respond_to do |format|
       if @tweet.save
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully created.' }
-        format.json { render :show, status: :created, location: @tweet }
+        redirect_to @tweet, notice: 'Tweet was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
@@ -40,25 +52,18 @@ class TweetsController < ApplicationController
   # PATCH/PUT /tweets/1
   # PATCH/PUT /tweets/1.json
   def update
-    respond_to do |format|
       if @tweet.update(tweet_params)
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tweet }
+         redirect_to @tweet, notice: 'Tweet was successfully updated.'
       else
-        format.html { render :edit }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
   # DELETE /tweets/1
   # DELETE /tweets/1.json
   def destroy
     @tweet.destroy
-    respond_to do |format|
-      format.html { redirect_to tweets_url, notice: 'Tweet was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to tweets_url, notice: 'Tweet was successfully destroyed.'
   end
 
   private
@@ -70,5 +75,11 @@ class TweetsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
       params.require(:tweet).permit(:keyword, :result_type, :limit)
+    end
+
+    def set_twitter
+      @client = Twitter::REST::Client.new(:consumer_key => TWITTER_CONSUMER_KEY,
+      :consumer_secret => TWITTER_CONSUMER_SECRET, :token => TWITTER_ACCESS_TOKEN,
+      :secret => TWITTER_ACCESS_SECRET)
     end
 end
