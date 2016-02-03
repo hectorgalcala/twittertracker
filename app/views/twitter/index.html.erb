@@ -25,6 +25,6 @@
     <!-- <p><%#= tweet.user.id %></p> -->
 
   <h3>Hora del tweet</h3>
-   <p><%= tweet.created_at %></p>
+   <p><%= distance_of_time_in_words_to_now(tweet.created_at) %></p>
 <%  end %>
 </div>
