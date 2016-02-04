@@ -4,7 +4,6 @@ class TweetsController < ApplicationController
 
   helper_method :word_filter
 
-
   TWITTER_CONSUMER_KEY = App.all.first.consumer_key
   TWITTER_CONSUMER_SECRET = App.all.first.consumer_secret
   TWITTER_ACCESS_TOKEN = App.all.first.access_token
@@ -21,7 +20,37 @@ class TweetsController < ApplicationController
   # GET /tweets/1.json
   def show
     @search = @client.search(@tweet.keyword, result_type: @tweet.result_type).take(@tweet.limit)
-    word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
+    word_list = %w(
+     PSUV psuv luchador luchadora LUCHADOR LUCHADORA
+     Nicolas NICOLAS Nicolas
+     DIOSDADO Diosdado diosdado
+     Cabello CABELLO cabello
+     por siempre
+     2021
+     Camino hacia la Revolución Bolivariana
+     Camino hacia la Revolucion Bolivariana
+     CAMINO HACIA LA REVOLUCION BOLIVARIANA
+     camino hacia la revolucion bolivarian
+     HUGO Hugo hugo
+     Frias frias FRIAS
+     100% Bolívar bolivar BOLIVAR Simon SIMON simon
+     Soldado soldado SOLDADO Soldada soldada SOLDADA
+     YoSoyChavez
+     MILITAR militar Militar
+     Humanista humanista nacionalista Nacionalista NACIONALISTA
+     4 de Febrero 1992
+     4F 4feb
+     cristo Cristo dios Dios DIOS
+     Militante MILITANTE militante BOLIVARIANO BOLIVARIANA Bolivariano Bolivariana bolivariano bolivariana
+     BOLIVARIANISTA Bolivarianista bolivarianista
+     REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria
+     socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez
+     VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista
+     comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista
+     ANTI-IMPERIALISTA anti-imperialista
+     COMANDANTE Comandante comandante supremo Supremo SUPREMO
+     INTERGALACTICO Intergalactico intergalactico
+     )
 
     @query = @search.select { |tweet| word_filter(tweet.user.description, word_list)  }
     # @query = @search.select { |tweet| tweet.user.description.include? word_list[3] }
