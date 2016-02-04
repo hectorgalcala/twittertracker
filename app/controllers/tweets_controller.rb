@@ -2,19 +2,15 @@ class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
   before_action :set_twitter, only: [:index, :show]
 
-  api_key = {
-  consumer_key: "TZnjmcMkWVwGmFESPNpLpYvhm",
-  consumer_secret: "m7EJpSI9mDN6PIfxmc3WC4MRW4idNMojQ0SZkjlPjBg0gRxMHZ",
-  access_token: "38503207-vNSvaBgpbVK4elAmB7UGGqvzyzZuRUunWdo272wEG",
-  access_token_secret:"84bgcso2APKq2eyd49QIThrF6fFw34FBvbrEufRkxnk93"
-  }
-  TWITTER_CONSUMER_KEY = api_key[:consumer_key]
-  TWITTER_CONSUMER_SECRET = api_key[:consumer_secret]
-  TWITTER_ACCESS_TOKEN = api_key[:access_token]
-  TWITTER_ACCESS_SECRET = api_key[:access_token_secret]
+  helper_method :word_filter
 
 
-
+  TWITTER_CONSUMER_KEY = App.all.find(1).consumer_key
+  TWITTER_CONSUMER_SECRET = App.all.find(1).consumer_secret
+  TWITTER_ACCESS_TOKEN = App.all.find(1).access_token
+  TWITTER_ACCESS_SECRET = App.all.find(1).access_token_secret
+  word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
+  word_list = ["REVOLUCIONARIA", "REVOLUCIONARIO", "Revolucionario", "revolucionario", "Revolucionaria", "revolucionaria", "socialista", "Socialista", "SOCIALISTA", "chavista", "Chavista", "CHAVISTA", "Chávez", "chávez", "VENEZOLANA", "VENEZOLANO", "Venezolano", "Venezolana", "venezolana", "venezolano", "ACTIVISTA", "activista", "Activista", "comunista", "Comunista", "COMUNISTA", "radical", "Radical", "RADICAL", "MADURISTA", "madurista", "Madurista", "anti-imperialista", "comandante", "supremo", "intergalactico"]
   # GET /tweets
   # GET /tweets.json
   def index
@@ -24,6 +20,13 @@ class TweetsController < ApplicationController
   # GET /tweets/1
   # GET /tweets/1.json
   def show
+    @search = @client.search(@tweet.keyword, result_type: @tweet.result_type).take(@tweet.limit)
+    word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
+
+    @query = @search.select { |tweet| word_filter(tweet.user.description, word_list)  }
+    # @query = @search.select { |tweet| tweet.user.description.include? word_list[3] }
+
+
   end
 
   # GET /tweets/new
@@ -46,6 +49,7 @@ class TweetsController < ApplicationController
       end
   end
 
+
   # PATCH/PUT /tweets/1
   # PATCH/PUT /tweets/1.json
   def update
@@ -64,6 +68,18 @@ class TweetsController < ApplicationController
   end
 
   private
+
+    def word_filter(text, words_array)
+
+      words_array.each do |word|
+        return true if text.include?(word)
+      end
+
+      false
+
+    end
+
+
     # Use callbacks to share common setup or constraints between actions.
     def set_tweet
       @tweet = Tweet.find(params[:id])

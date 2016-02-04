@@ -17,18 +17,44 @@
 
 <%= link_to 'Edit', edit_tweet_path(@tweet) %> |
 <%= link_to 'Back', tweets_path %>
-
-
+<% query_counter = 0 %>
+<% search_counter = 0 %>
+<h1 id="query">QUERY</h1> <h2><%= @query.count %></h2>
 <div class="container">
-<% counter = 0 %>
-<% @client.search(@tweet.keyword, result_type: @tweet.result_type).take(@tweet.limit).collect do |tweet| %>
-  <% counter += 1 %>
-  <h2><%= counter %></h2>
+
+<% @query.collect do |tweet| %>
+  <% query_counter += 1 %>
+
+  <h2><%= query_counter %></h2>
+
   <h3>Usuario</h3>
   <p><%= tweet.user.screen_name %></p>
     <h3>Nombre de Usuario</h3>
     <p><%= tweet.user.name %> </p>
-    <h3>Tweet:</h3>
+    <h3>Biografia del usuario:</h3>
+     <p><%= tweet.user.description %></p>
+    <h2>Tweet:</h2>
+    <p><%= tweet.full_text %></p>
+
+
+
+  <h3>Hora del tweet</h3>
+   <p><%= distance_of_time_in_words_to_now(tweet.created_at) %></p>
+<%  end %>
+
+<h1 id="search">SEARCH</h1>
+<% @search.collect do |tweet| %>
+  <% search_counter += 1 %>
+
+  <h2><%= search_counter %></h2>
+
+  <h3>Usuario</h3>
+  <p><%= tweet.user.screen_name %></p>
+    <h3>Nombre de Usuario</h3>
+    <p><%= tweet.user.name %> </p>
+    <h3>Biografia del usuario:</h3>
+     <p><%= tweet.user.description %></p>
+    <h2>Tweet:</h2>
     <p><%= tweet.full_text %></p>
 
 
