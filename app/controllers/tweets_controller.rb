@@ -4,10 +4,11 @@ class TweetsController < ApplicationController
 
   helper_method :word_filter
 
-  TWITTER_CONSUMER_KEY = App.all.first.consumer_key
-  TWITTER_CONSUMER_SECRET = App.all.first.consumer_secret
-  TWITTER_ACCESS_TOKEN = App.all.first.access_token
-  TWITTER_ACCESS_SECRET = App.all.first.access_token_secret
+  # TWITTER_CONSUMER_KEY = App.all.first.consumer_key
+  # TWITTER_CONSUMER_SECRET = App.all.first.consumer_secret
+  # TWITTER_ACCESS_TOKEN = App.all.first.access_token
+  # TWITTER_ACCESS_SECRET = App.all.first.access_token_secret
+
   word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
   word_list = ["REVOLUCIONARIA", "REVOLUCIONARIO", "Revolucionario", "revolucionario", "Revolucionaria", "revolucionaria", "socialista", "Socialista", "SOCIALISTA", "chavista", "Chavista", "CHAVISTA", "Chávez", "chávez", "VENEZOLANA", "VENEZOLANO", "Venezolano", "Venezolana", "venezolana", "venezolano", "ACTIVISTA", "activista", "Activista", "comunista", "Comunista", "COMUNISTA", "radical", "Radical", "RADICAL", "MADURISTA", "madurista", "Madurista", "anti-imperialista", "comandante", "supremo", "intergalactico"]
   # GET /tweets
@@ -52,7 +53,7 @@ class TweetsController < ApplicationController
      INTERGALACTICO Intergalactico intergalactico
      )
 
-    @query = @search.select { |tweet| word_filter(tweet.user.description, word_list)  }
+    # @query = @search.select { |tweet| word_filter(tweet.user.description, word_list)  }
     # @query = @search.select { |tweet| tweet.user.description.include? word_list[3] }
 
 
@@ -120,8 +121,8 @@ class TweetsController < ApplicationController
     end
 
     def set_twitter
-      @client = Twitter::REST::Client.new(:consumer_key => TWITTER_CONSUMER_KEY,
-      :consumer_secret => TWITTER_CONSUMER_SECRET, :token => TWITTER_ACCESS_TOKEN,
-      :secret => TWITTER_ACCESS_SECRET)
+      # @client = Twitter::REST::Client.new(:consumer_key => TWITTER_CONSUMER_KEY,
+      # :consumer_secret => TWITTER_CONSUMER_SECRET, :token => TWITTER_ACCESS_TOKEN,
+      # :secret => TWITTER_ACCESS_SECRET)
     end
 end
