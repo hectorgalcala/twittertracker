@@ -9,8 +9,40 @@ class TweetsController < ApplicationController
   TWITTER_ACCESS_TOKEN = App.all.first.access_token
   TWITTER_ACCESS_SECRET = App.all.first.access_token_secret
 
-  word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
-  word_list = ["REVOLUCIONARIA", "REVOLUCIONARIO", "Revolucionario", "revolucionario", "Revolucionaria", "revolucionaria", "socialista", "Socialista", "SOCIALISTA", "chavista", "Chavista", "CHAVISTA", "Chávez", "chávez", "VENEZOLANA", "VENEZOLANO", "Venezolano", "Venezolana", "venezolana", "venezolano", "ACTIVISTA", "activista", "Activista", "comunista", "Comunista", "COMUNISTA", "radical", "Radical", "RADICAL", "MADURISTA", "madurista", "Madurista", "anti-imperialista", "comandante", "supremo", "intergalactico"]
+  # word_list = %w(REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista anti-imperialista comandante supremo intergalactico)
+  # word_list = ["REVOLUCIONARIA", "REVOLUCIONARIO", "Revolucionario", "revolucionario", "Revolucionaria", "revolucionaria", "socialista", "Socialista", "SOCIALISTA", "chavista", "Chavista", "CHAVISTA", "Chávez", "chávez", "VENEZOLANA", "VENEZOLANO", "Venezolano", "Venezolana", "venezolana", "venezolano", "ACTIVISTA", "activista", "Activista", "comunista", "Comunista", "COMUNISTA", "radical", "Radical", "RADICAL", "MADURISTA", "madurista", "Madurista", "anti-imperialista", "comandante", "supremo", "intergalactico"]
+  # word_list = %w(
+  #  PSUV psuv luchador luchadora LUCHADOR LUCHADORA
+  #  imperio IMPERIO
+  #  Nicolas NICOLAS Nicolas
+  #  DIOSDADO Diosdado diosdado
+  #  Cabello CABELLO cabello
+  #  por siempre
+  #  2021
+  #  Camino hacia la Revolución Bolivariana
+  #  Camino hacia la Revolucion Bolivariana
+  #  CAMINO HACIA LA REVOLUCION BOLIVARIANA
+  #  camino hacia la revolucion bolivarian
+  #  HUGO Hugo hugo
+  #  Frias frias FRIAS
+  #  100% Bolívar bolivar BOLIVAR Simon SIMON simon
+  #  Soldado soldado SOLDADO Soldada soldada SOLDADA
+  #  YoSoyChavez
+  #  MILITAR militar Militar
+  #  Humanista humanista nacionalista Nacionalista NACIONALISTA
+  #  4 de Febrero 1992
+  #  4F 4feb
+  #  cristo Cristo dios Dios DIOS
+  #  Militante MILITANTE militante BOLIVARIANO BOLIVARIANA Bolivariano Bolivariana bolivariano bolivariana
+  #  BOLIVARIANISTA Bolivarianista bolivarianista
+  #  REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria
+  # Socialismo socialismo SOCIALISMO  socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez
+  #  VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista
+  # COMUNISMO Comunismo comunismo  comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista
+  #  ANTI-IMPERIALISTA anti-imperialista
+  #  COMANDANTE Comandante comandante supremo Supremo SUPREMO
+  #  INTERGALACTICO Intergalactico intergalactico
+  #  )
   # GET /tweets
   # GET /tweets.json
   def index
@@ -21,38 +53,8 @@ class TweetsController < ApplicationController
   # GET /tweets/1.json
   def show
     @search = @client.search(@tweet.keyword, result_type: @tweet.result_type).take(@tweet.limit)
-    word_list = %w(
-     PSUV psuv luchador luchadora LUCHADOR LUCHADORA
-     Nicolas NICOLAS Nicolas
-     DIOSDADO Diosdado diosdado
-     Cabello CABELLO cabello
-     por siempre
-     2021
-     Camino hacia la Revolución Bolivariana
-     Camino hacia la Revolucion Bolivariana
-     CAMINO HACIA LA REVOLUCION BOLIVARIANA
-     camino hacia la revolucion bolivarian
-     HUGO Hugo hugo
-     Frias frias FRIAS
-     100% Bolívar bolivar BOLIVAR Simon SIMON simon
-     Soldado soldado SOLDADO Soldada soldada SOLDADA
-     YoSoyChavez
-     MILITAR militar Militar
-     Humanista humanista nacionalista Nacionalista NACIONALISTA
-     4 de Febrero 1992
-     4F 4feb
-     cristo Cristo dios Dios DIOS
-     Militante MILITANTE militante BOLIVARIANO BOLIVARIANA Bolivariano Bolivariana bolivariano bolivariana
-     BOLIVARIANISTA Bolivarianista bolivarianista
-     REVOLUCIONARIA REVOLUCIONARIO Revolucionario revolucionario Revolucionaria revolucionaria
-     socialista Socialista SOCIALISTA chavista Chavista CHAVISTA Chávez chávez
-     VENEZOLANA VENEZOLANO Venezolano Venezolana venezolana venezolano ACTIVISTA activista Activista
-     comunista Comunista COMUNISTA radical Radical RADICAL MADURISTA madurista Madurista
-     ANTI-IMPERIALISTA anti-imperialista
-     COMANDANTE Comandante comandante supremo Supremo SUPREMO
-     INTERGALACTICO Intergalactico intergalactico
-     )
 
+word_list = %w(CHAVEZ chavez Chavez chavista CHAVISTA soldado soldada Soldado Soldada SOLDADO SOLDADA )
     @query = @search.select { |tweet| word_filter(tweet.user.description, word_list)  }
     @query = @search.select { |tweet| tweet.user.description.include? word_list[3] }
 
